@@ -50,6 +50,7 @@ namespace FeliCa2Money
         private string mMemo = "";
         private int mValue = 0;      // 金額
         private int mBalance = 0;    // 残高
+        private string mAccountName = "" ; //アカウント名(1つのCSVに複数のアカウントのデータが含まれているとき)
 
         // 取引ID生成用のシリアル番号。mId が UNASSIGNED_ID の場合にのみ使用
         private int mSerial = 0; 
@@ -102,6 +103,11 @@ namespace FeliCa2Money
         {
             get { return mSerial; }
             set { mSerial = value; }
+        }
+        public string account
+        {
+            get { return mAccountName; }
+            set { mAccountName = value; }
         }
 
         public bool isIdUnassigned()

@@ -141,6 +141,23 @@ namespace FeliCa2Money
         }
 
         /// <summary>
+        /// Name に一致するルールを探す
+        /// </summary>
+        /// <param name="firstLine">firstLine</param>
+        /// <returns>ルール</returns>
+        public CsvRule FindRuleWithName(string name)
+        {
+            foreach (CsvRule rule in mRules)
+            {
+                if (rule.name == name)
+                {
+                    return rule;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// firstLine に一致するルールを探す
         /// </summary>
         /// <param name="firstLine">firstLine</param>

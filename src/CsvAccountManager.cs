@@ -39,6 +39,19 @@ namespace FeliCa2Money
         private List<CsvAccount> mAccounts = new List<CsvAccount>();
         private CsvRules mRules = new CsvRules();
 
+        public List<Account> account_list
+        {
+            get {
+                List<Account> new_list = new List<Account>();
+
+                foreach(CsvAccount one_csv_account in mAccounts){
+                    new_list.Add(one_csv_account) ;
+                }               
+                
+                return new_list;
+            }
+        }
+
         public CsvAccountManager()
         {
             LoadAccounts();
@@ -259,6 +272,38 @@ namespace FeliCa2Money
             account.startReading(path, rule);
             return account;
         }
+        /// <summary>
+        /// CSVアカウントを選択
+        /// </summary>
+        /// <param name="path">CSVファイルパス</param>
+        /// <returns>CSVアカウント</returns>
+        public CsvAccount AddTransactionByTransaction(Transaction transaction)
+        {
+            // CSVファイルに合致するルール⇒アカウントを探す
+            CsvAccount account = null;
+            foreach (CsvAccount acc in mAccounts)
+            {
+                if (acc.ident == transaction.account)
+                {
+                    account = acc;
+                    break;
+                }
+            }
+
+            if (account!= null)
+            {
+                // アカウントに対応するルールを選択する
+                CsvRule rule = mRules.FindRuleWithName(account.accountName);
+                if (rule != null)
+                {
+                    account.bankId = rule.bankId;
+                }
+                account.transactions.Add(transaction);
+            }
+                        
+            return account;
+        }
+
 
         /// <summary>
         /// マッチする CSV ルールを探す

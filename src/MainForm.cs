@@ -129,8 +129,28 @@ namespace FeliCa2Money
                 MessageBox.Show(ex.Message, Properties.Resources.Error);
                 return;
             }
-             
-            readAndGenerateOfx(account);
+
+            if (account.accountName == "MultiAccount")
+            {
+                if (readTransactions(account))
+                {
+                    foreach (Transaction one_data in account.transactions)
+                    {
+                        manager.AddTransactionByTransaction(one_data);
+                    }
+
+                    manager.DeleteAccount(account);
+
+                    generateOfx(manager.account_list);
+
+                    manager.AddAccount(account);
+                }
+            }
+            else
+            {
+                readAndGenerateOfx(account);
+            }
+
             account.Close();
         }
 

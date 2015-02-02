@@ -31,7 +31,7 @@ namespace FeliCa2Money
 {
     public class CsvRule
     {
-        public enum SortOrder { Ascent, Descent, Auto };
+        public enum SortOrder { Ascent, Descent, Auto, AccountName };
 
         private string mIdent;    // 識別子(組織名)
         private string mBankId;      // 銀行ID
@@ -73,7 +73,9 @@ namespace FeliCa2Money
                     mSortOrder = SortOrder.Auto;
                 } else if (value == "Descent") {
                     mSortOrder = SortOrder.Descent;
-                } else {
+                } else if (value == "AccountName") {
+                    mSortOrder = SortOrder.AccountName;
+                }else {
                     mSortOrder = SortOrder.Ascent;
                 }
             }
@@ -225,6 +227,9 @@ namespace FeliCa2Money
 
             // 備考
             t.memo = getMultiCol(row, "Memo");
+
+            // アカウント
+            t.account = getCol(row, "Account");
 
             // トランザクションタイプを自動設定
             t.GuessTransType(t.value >= 0);

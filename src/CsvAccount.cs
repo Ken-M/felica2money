@@ -125,6 +125,10 @@ namespace FeliCa2Money
                 case CsvRule.SortOrder.Auto:
                     transactions.list.Sort(compareByDate);
                     break;
+
+                case CsvRule.SortOrder.AccountName :
+                    transactions.list.Sort(compareByAccount);
+                    break;
             }
 
             mTransactions = transactions;
@@ -151,6 +155,11 @@ namespace FeliCa2Money
         private static int compareByDate(Transaction x, Transaction y)
         {
             return x.date.CompareTo(y.date);
+        }
+
+        private static int compareByAccount(Transaction x, Transaction y)
+        {
+            return x.account.CompareTo(y.account);
         }
     }
 }
