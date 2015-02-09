@@ -104,6 +104,15 @@ namespace FeliCa2Money
                     account.accountName = a[3];
                 }
 
+                if (account.ident.EndsWith("_CARD") == true)
+                {
+                    account.isCreditCard = true;
+                }
+                else
+                {
+                    account.isCreditCard = false;
+                }
+
                 mAccounts.Add(account);
             }
         }
@@ -283,7 +292,7 @@ namespace FeliCa2Money
             CsvAccount account = null;
             foreach (CsvAccount acc in mAccounts)
             {
-                if (acc.ident == transaction.account)
+                if (acc.accountName == transaction.account)
                 {
                     account = acc;
                     break;
