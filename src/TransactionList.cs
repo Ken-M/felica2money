@@ -63,20 +63,22 @@ namespace FeliCa2Money
         public void assignSerials()
         {
             int serial = 0;
-            DateTime prevDate = new DateTime(1900, 1, 1, 0, 0, 0);
 
             foreach (Transaction t in mList)
             {
+                serial = 0;
+
                 if (t.isIdUnassigned())
                 {
-                    if (t.date == prevDate)
+                    foreach (Transaction t2 in mList)
                     {
-                        serial++;
-                    }
-                    else
-                    {
-                        serial = 0;
-                        prevDate = t.date;
+                        if (!t2.isIdUnassigned())
+                        {
+                                if ((t.date == t2.date) && (t.desc == t2.desc) && (t.value == t2.value) && (t.memo == t2.memo))
+                                {
+                                    serial++;
+                                }
+                        } 
                     }
                     t.serial = serial;
                 }
